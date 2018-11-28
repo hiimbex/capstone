@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  script
+      include ../routes/d3.js
+  ul
+  each val, index in body
+    li= index + ': ' + val
+
+
+

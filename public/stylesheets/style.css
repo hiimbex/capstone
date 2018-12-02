@@ -8,11 +8,10 @@ a {
 }
 
 svg rect {
-   fill: green;
+   fill: gray;
 }
 
 svg text {
-   fill: yellow;
-   font: 12px sans-serif;
-   text-anchor: end;
+   fill: black;
+   font: 15px sans-serif;
 }

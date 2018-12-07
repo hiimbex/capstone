@@ -3,6 +3,9 @@ extends layout
 block content
   h1 American Housing Survey Data Visualization
   p Total usable entries: #{title}
+  h4 Filters:
+  <button onClick="window.location='?citizen=0';" class="float-left submit-button" >Non-citizens</button>
+  <button onClick="window.location='?citizen=1';" class="float-left submit-button" >Citizens</button>
   ul
   each val, index in body
     li#data= index + ': ' + val
@@ -10,3 +13,7 @@ block content
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   script
       include ../routes/d3.js
+  ul
+  each val, index in data
+    li= index + ': ' + val
+  br

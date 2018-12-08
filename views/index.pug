@@ -6,6 +6,9 @@ block content
   h4 Filters:
   <button onClick="window.location='?citizen=0';" class="float-left submit-button" >Non-citizens</button>
   <button onClick="window.location='?citizen=1';" class="float-left submit-button" >Citizens</button>
+  <button onClick="window.location='?grad=1';" class="float-left submit-button" >Graduate Degree</button>
+  <button onClick="window.location='?grad=2';" class="float-left submit-button" >Bachelors Degree</button>
+  <button onClick="window.location='?grad=3';" class="float-left submit-button" >High School Degree or less</button>
   ul
   each val, index in body
     li#data= index + ': ' + val

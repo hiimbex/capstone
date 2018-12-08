@@ -1,6 +1,5 @@
 let data = []
 const mydata = d3.selectAll("#data")
-    .style("color", "blue");
 //console.log('help', mydata[0], typeof mydata[0])
 Object.keys(mydata[0]).forEach(function (key) {
   data.push(mydata[0][key].innerHTML)
@@ -38,3 +37,4 @@ bar.append("text")
   .attr("y", barHeight / 2)
   .attr("dy", ".50em")
   .text(function(d) { return d })
+  .style('color', '#331832')

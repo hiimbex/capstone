@@ -1,19 +1,35 @@
 body {
   padding: 50px;
+  background-color: #F1ECCE; /* eegg creame */
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #331832;
+}
+
+h1 {
+  color: #331832;
 }
 
 a {
-  color: #00B7FF;
+  color: #331832;
 }
 
 svg rect {
-   fill: gray;
+   fill: #726DA8; /*purple*/
+}
+
+text {
+  color: #331832;
 }
 
 svg text {
-   fill: black;
+   color: #331832;
    font: 15px sans-serif;
+}
+
+button {
+  background-color: #9FC2CC;
+  border-radius: 7px;
+  color: #331832;
 }
 
 /* The switch - the box around the slider */
@@ -39,7 +55,7 @@ svg text {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #9FC2CC;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -51,17 +67,17 @@ svg text {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: #9FC2CC;
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #9FC2CC;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #9FC2CC;
 }
 
 input:checked + .slider:before {

@@ -4,16 +4,25 @@ const dotenv = require('dotenv')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let query
+  let query = { AGE1: { $gt: 0 }}
+
   // Get query parameters
+  let rent = req.query.rent
+  if (rent === '1') { // only show non-citizens
+    query = { AGE1: { $gt: 0 }, RENT: { $lt: 500 }}
+  } else if (rent === '2') { // only show citizens
+    query = { AGE1: { $gt: 0 }, RENT: { $gt: 500, $lt: 1000 }}
+  } else if (rent === '3') { // only show citizens
+    query = { AGE1: { $gt: 0 }, RENT: { $gt: 1000, $lt: 2000 }}
+  } else if (rent === '4') { // only show citizens
+    query = { AGE1: { $gt: 0 }, RENT: { $gt: 2000 }}
+  }
+
   let citizen = req.query.citizen
-  console.log('citizen: ', citizen, typeof citizen)
   if (citizen === '0') { // only show non-citizens
     query = { AGE1: { $gt: 0 },  CITSHP1: { $in: [ "'5'" ] }}
   } else if (citizen === '1') { // only show citizens
     query = { AGE1: { $gt: 0 },  CITSHP1: { $in: [ "'1'", "'2'", "'3'", "'4'" ] }}
-  } else { // show everyone
-    query = { AGE1: { $gt: 0 }}
   }
 
   let resultz
@@ -22,12 +31,11 @@ router.get('/', function(req, res, next) {
   MongoClient.connect(uri, function(err, client) {
     const collection = client.db("housing").collection("ahs")
 
-    collection.find({ AGE1: 21, CITSHP1: "'1'" }).limit(1).toArray(function(err, result) {
-      console.log(result)
+    collection.find({ AGE1: 21, RENT: 950 }).toArray(function(err, result) {
+      console.log(result[0].RENT)
       resultz = result
     })
     // 2 for mold means no, 1 means yes
-    //const query = { AGE1: 24 }
     const projection = { MOLDKITCH: 1,
       MOLDBATH: 1,
       MOLDBEDRM: 1,
@@ -36,9 +44,8 @@ router.get('/', function(req, res, next) {
       MOLDOTHER: 1,
       _id: 0
     }
-    console.log(query)
+
     collection.find(query).project(projection).toArray(function(err, result) {
-      console.log(result)
       if (err) throw err
       let counts = { MOLDKITCH: 0,
         MOLDBATH: 0,
@@ -73,7 +80,6 @@ router.get('/', function(req, res, next) {
         // do the math
         percents[item] = counts[item]/total
       })
-      //res.render('index', { title: result[0].AGE1, body: result[0]});
       res.render('index', { title: total, body: percents, data: resultz[0]});
       client.close()
     });

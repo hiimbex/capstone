@@ -25,7 +25,6 @@ router.get('/', function(req, res, next) {
     query = { AGE1: { $gt: 0 },  CITSHP1: { $in: [ "'1'", "'2'", "'3'", "'4'" ] }}
   }
 
-  //rose trying to filter grad
   let grad = req.query.grad
   console.log('grad: ', grad, typeof grad)
   if (grad === '1') { // masters, doctrates, etc
@@ -35,11 +34,7 @@ router.get('/', function(req, res, next) {
   } else if ( grad === '3') {  // showing less than bachelor's
     query = { AGE1: {$gt: 0}, GRAD1: {$in: ["'39'", "'38'", "'37'", "'36'",
     "'35'", "'34'", "'33'","'32'", "'31'"]} }
-  } else { //show all
-    query = { AGE1: {$gt: 0}}
   }
-
-
   //end
 
   let resultz

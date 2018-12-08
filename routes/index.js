@@ -25,14 +25,31 @@ router.get('/', function(req, res, next) {
     query = { AGE1: { $gt: 0 },  CITSHP1: { $in: [ "'1'", "'2'", "'3'", "'4'" ] }}
   }
 
+  //rose trying to filter grad
+  let grad = req.query.grad
+  console.log('grad: ', grad, typeof grad)
+  if (grad === '1') { // masters, doctrates, etc
+    query = { AGE1: { $gt: 0}, GRAD1: { $in: ["'45'", "'46'", "'47'"]}}
+  } else if (grad === '2') { // showing bachelor's grads
+    query = { AGE1: { $gt: 0}, GRAD1: { $in: ["'44'"]}}
+  } else if ( grad === '3') {  // showing less than bachelor's
+    query = { AGE1: {$gt: 0}, GRAD1: {$in: ["'39'", "'38'", "'37'", "'36'",
+    "'35'", "'34'", "'33'","'32'", "'31'"]} }
+  } else { //show all
+    query = { AGE1: {$gt: 0}}
+  }
+
+
+  //end
+
   let resultz
   var MongoClient = require('mongodb').MongoClient
   const uri = process.env.URI
   MongoClient.connect(uri, function(err, client) {
     const collection = client.db("housing").collection("ahs")
 
-    collection.find({ AGE1: 21, RENT: 950 }).toArray(function(err, result) {
-      console.log(result[0].RENT)
+    collection.find({ AGE1: 21, CITSHP1: "'1'" }).limit(1).toArray(function(err, result) {
+      console.log(result.GRAD1, typeof result.GRAD1)
       resultz = result
     })
     // 2 for mold means no, 1 means yes

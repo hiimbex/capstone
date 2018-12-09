@@ -8,7 +8,7 @@ data.splice(-1,1)
 console.log(data)
 //var data = [10, 5, 12, 15]
 var width = 1000,
-  scaleFactor = 25000,
+  scaleFactor = 2900,
   barHeight = 100
 
 let height = barHeight * data.length
@@ -41,18 +41,10 @@ bar.append("text")
     let num = d.split(': ')[1]
     num = (num * 100).toFixed(2) + '%'
     let name = d.split(': ')[0]
-    if (name === 'MOLDKITCH') {
-      name = 'Kitchen Mold'
-    } else if (name === 'MOLDBATH') {
-      name = 'Bathroom Mold'
-    } else if (name === 'MOLDBEDRM') {
-      name = 'Bedroom Mold'
-    } else if (name === 'MOLDBASEM') {
-      name = 'Basement Mold'
-    } else if (name === 'MOLDLROOM') {
-      name = 'Living Room Mold'
-    } else if (name === 'MOLDOTHER') {
-      name = 'Other Mold'
+    if (name === 'ROACH') {
+      name = 'Roaches'
+    } else if (name === 'RODENT') {
+      name = 'Rodents'
     }
     console.log(name, num)
     return `${name}: ${num}`

@@ -43,52 +43,50 @@ router.get('/', function(req, res, next) {
   MongoClient.connect(uri, function(err, client) {
     const collection = client.db("housing").collection("ahs")
 
-    // 2 for mold means no, 1 means yes
-    const projection = { MOLDKITCH: 1,
-      MOLDBATH: 1,
-      MOLDBEDRM: 1,
-      MOLDBASEM: 1,
-      MOLDLROOM: 1,
-      MOLDOTHER: 1,
+    collection.find({ AGE1: 21, CITSHP1: "'1'" }).limit(1).toArray(function(err, result) {
+      console.log(result.GRAD1, typeof result.GRAD1)
+      resultz = result
+    })
+    // 2 for roach means no, 1 means yes
+    const projection = { ROACH: 1,
+      RODENT: 1,
       _id: 0
     }
 
     collection.find(query).project(projection).toArray(function(err, result) {
       if (err) throw err
-      let counts = { MOLDKITCH: 0,
-        MOLDBATH: 0,
-        MOLDBEDRM: 0,
-        MOLDBASEM: 0,
-        MOLDLROOM: 0,
-        MOLDOTHER: 0
+      let counts = { ROACH: 0,
+        RODENT: 0
       }
-      let percents = { MOLDKITCH: 0,
-        MOLDBATH: 0,
-        MOLDBEDRM: 0,
-        MOLDBASEM: 0,
-        MOLDLROOM: 0,
-        MOLDOTHER: 0
+      let percents = { ROACH: 0,
+        RODENT: 0
       }
       let total = result.length
       result.forEach(function (person) {
-        let molds = Object.keys(person)
-        molds.forEach(function (room) {
+        console.log(typeof person.RODENT, person.RODENT, person.ROACH)
+        let roachs = Object.keys(person)
+        console.log(roachs)
+        roachs.forEach(function (room) {
           let num = parseInt(person[room].charAt(1), 10)
+          console.log(num)
           if (isNaN(num)) {
             total -= 1
           } else {
-            if (num === 2) {
+            if (num === 4 || num === 5) {
               num = 0
             }
+            //console.log(counts[room], room)
             counts[room] += num
           }
         })
       })
+      console.log('coutns', counts)
       Object.keys(counts).forEach(function (item) {
         // do the math
         percents[item] = counts[item]/total
       })
-      res.render('index', { title: "American Housing Survey", total, body: percents});
+      console.log(percents)
+      res.render('roach', { title: "American Housing Survey", total, body: percents });
       client.close()
     });
   });

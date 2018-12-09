@@ -1,12 +1,10 @@
 let data = []
 const mydata = d3.selectAll("#data")
-//console.log('help', mydata[0], typeof mydata[0])
 Object.keys(mydata[0]).forEach(function (key) {
   data.push(mydata[0][key].innerHTML)
 })
 data.splice(-1,1)
-console.log(data)
-//var data = [10, 5, 12, 15]
+
 var width = 1000,
   scaleFactor = 2900,
   barHeight = 100
@@ -37,7 +35,6 @@ bar.append("text")
   .attr("y", barHeight / 2)
   .attr("dy", ".50em")
   .text(function(d) {
-    console.log("HELLO", d)
     let num = d.split(': ')[1]
     num = (num * 100).toFixed(2) + '%'
     let name = d.split(': ')[0]
@@ -46,7 +43,6 @@ bar.append("text")
     } else if (name === 'RODENT') {
       name = 'Rodents'
     }
-    console.log(name, num)
     return `${name}: ${num}`
   })
   .style('color', '#331832')

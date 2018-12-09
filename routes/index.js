@@ -26,7 +26,6 @@ router.get('/', function(req, res, next) {
   }
 
   let grad = req.query.grad
-  console.log('grad: ', grad, typeof grad)
   if (grad === '1') { // masters, doctrates, etc
     query = { AGE1: { $gt: 0}, GRAD1: { $in: ["'45'", "'46'", "'47'"]}}
   } else if (grad === '2') { // showing bachelor's grads
@@ -35,7 +34,6 @@ router.get('/', function(req, res, next) {
     query = { AGE1: {$gt: 0}, GRAD1: {$in: ["'39'", "'38'", "'37'", "'36'",
     "'35'", "'34'", "'33'","'32'", "'31'"]} }
   }
-  //end
 
   let resultz
   var MongoClient = require('mongodb').MongoClient

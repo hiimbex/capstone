@@ -26,7 +26,6 @@ router.get('/', function(req, res, next) {
   }
 
   let grad = req.query.grad
-  console.log('grad: ', grad, typeof grad)
   if (grad === '1') { // masters, doctrates, etc
     query = { AGE1: { $gt: 0}, GRAD1: { $in: ["'45'", "'46'", "'47'"]}}
   } else if (grad === '2') { // showing bachelor's grads
@@ -42,11 +41,6 @@ router.get('/', function(req, res, next) {
   const uri = process.env.URI
   MongoClient.connect(uri, function(err, client) {
     const collection = client.db("housing").collection("ahs")
-
-    collection.find({ AGE1: 21, CITSHP1: "'1'" }).limit(1).toArray(function(err, result) {
-      console.log(result.GRAD1, typeof result.GRAD1)
-      resultz = result
-    })
     // 2 for roach means no, 1 means yes
     const projection = { ROACH: 1,
       RODENT: 1,
@@ -63,29 +57,23 @@ router.get('/', function(req, res, next) {
       }
       let total = result.length
       result.forEach(function (person) {
-        console.log(typeof person.RODENT, person.RODENT, person.ROACH)
         let roachs = Object.keys(person)
-        console.log(roachs)
         roachs.forEach(function (room) {
           let num = parseInt(person[room].charAt(1), 10)
-          console.log(num)
           if (isNaN(num)) {
             total -= 1
           } else {
             if (num === 4 || num === 5) {
               num = 0
             }
-            //console.log(counts[room], room)
             counts[room] += num
           }
         })
       })
-      console.log('coutns', counts)
       Object.keys(counts).forEach(function (item) {
         // do the math
         percents[item] = counts[item]/total
       })
-      console.log(percents)
       res.render('roach', { title: "American Housing Survey", total, body: percents });
       client.close()
     });

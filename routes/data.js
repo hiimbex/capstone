@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   MongoClient.connect(uri, function(err, client) {
     const collection = client.db("housing").collection("ahs")
     collection.find({ AGE1: 21 }).project({_id: 0}).limit(1).toArray(function(err, result) {
-      res.render('data', {body: result[0]});
+      res.render('data', {title: "American Housing Survey", body: result[0]});
       client.close()
     })
   });
